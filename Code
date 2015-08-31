@@ -1,0 +1,276 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+
+string  chs;
+
+string char_to_string(char c)
+{
+    stringstream ss;
+string s;
+ss << c;
+ss >> s;
+
+return s;
+}
+
+long int string_to_int(string s)
+{
+    stringstream ss(s);
+    long int x;
+    ss >> x;
+    return x;
+}
+
+string  r(long int x,long int y,string c)
+{
+
+
+    for(long int i=x;i<=(y+x)/2;i++)
+    {
+        char tmp;
+        tmp = c[i];
+        c[i] = c[y+x-i];
+        c[y+x-i] = tmp;
+    }
+
+
+    return  c;
+}
+void w(long int x,long int y,string c)
+{
+   for(int i=x;i<=y;i++)
+   {
+       cout<<c[i];
+   }
+    cout<< endl;
+}
+
+string  cd(long int x,long int y,char ch,string cha)
+{
+
+    for(long int i=x;i<=y;i++)
+    {
+        cha[i] = ch;
+    }
+    return  cha;
+}
+ string  s(long int x,long int y,long int x1,long int y1,string cha)
+{
+    char a1[y-x+1];
+    char a2[y1-x1+1];
+    char a3[x1-y+1];
+    long int k = 0;
+    for(long int i=x;i<=y;i++)
+    {
+        a1[k] = cha[i];
+        k++;
+    }
+    k=0;
+    for(long int i=x1;i<=y1;i++)
+    {
+        a2[k] = cha[i];
+        k++;
+    }
+    k=0;
+    for(long int i=y+1;i<x1;i++)
+    {
+        a3[k] = cha[i];
+        k++;
+    }
+
+     long int k1 = 0;
+     long int k2 = 0;
+     long int k3 = 0;
+
+    for(long int i=x;i<=y1;i++)
+    {
+        if(i>=x&&i<=x+(y1-x1))
+        {
+            cha[i] = a2[k1];
+            k1++;
+        }
+        else if(i>x+(y1-x1)&&i<(x+y1-y))
+        {
+            cha[i] = a3[k2];
+            k2++;
+        }
+        else if(i>=(x+y1-y)&&i<=y1)
+        {
+            cha[i] = a1[k3];
+            k3++;
+        }
+    }
+
+
+    return  cha;
+}
+void h(long int x,long int x1,long int l,string cha)
+{
+    long int counter = 0;
+    long int t;
+    long int dif = abs(x1-x);
+    if(x<x1)
+    {
+        t = x;
+    }
+    else
+    {
+        t = x1;
+    }
+
+    for(long int i=t;i<t+l;i++)
+    {
+        if(cha[i]!=cha[dif+i])
+        {
+            counter++;
+        }
+    }
+    cout<<counter<< endl;
+}
+
+int main()
+{
+    long int n,q;
+    cin>>n;
+    vector< string > chs1;
+    string str;
+
+        cin>>str;
+
+
+    chs = str;
+
+
+
+    cin>>q;
+
+    char c1,l;
+
+    vector < vector < string > > v;
+    vector <  string  > v1;
+
+    for(int i=0;i<q;i++)
+    {
+        v.push_back(v1);
+    }
+
+    for(long int i=0;i<q;i++)
+    {
+        cin>>c1;
+
+        if(c1=='R')
+        {
+            string x,y;
+            cin>>x;
+            cin>>y;
+            v[i].push_back("R");
+            v[i].push_back(x);
+            v[i].push_back(y);
+
+        }
+        else if(c1=='W')
+        {
+            string x,y;
+            cin>>x;
+            cin>>y;
+            v[i].push_back("W");
+            v[i].push_back(x);
+            v[i].push_back(y);
+        }
+        else if(c1=='C')
+        {
+            string k;
+            string x,y;
+            cin>>x;
+            cin>>y;
+            cin>>k;
+            v[i].push_back("C");
+            v[i].push_back(x);
+            v[i].push_back(y);
+            v[i].push_back(k);
+        }
+        else if(c1=='H')
+        {
+            string x,y,l;
+            cin>>x;
+            cin>>y;
+            cin>>l;
+            v[i].push_back("H");
+            v[i].push_back(x);
+            v[i].push_back(y);
+            v[i].push_back(l);
+        }
+        else if(c1=='S')
+        {
+            string x,y,x1,y1;
+            cin>>x;
+            cin>>y;
+            cin>>x1;
+            cin>>y1;
+            v[i].push_back("S");
+            v[i].push_back(x);
+            v[i].push_back(y);
+            v[i].push_back(x1);
+            v[i].push_back(y1);
+        }
+
+    }
+
+string c11;
+  for(long int i=0;i<v.size();i++)
+    {
+
+       c11 = v[i][0];
+
+        if(c11=="R")
+        {
+            long int x,y;
+            x = string_to_int(v[i][1]);
+            y = string_to_int(v[i][2]);
+            chs = r(x-1,y-1,chs);
+        }
+        else if(c11=="W")
+        {
+            long int x,y;
+            x = string_to_int(v[i][1]);
+            y = string_to_int(v[i][2]);
+            w(x-1,y-1,chs);
+        }
+        else if(c11=="C")
+        {
+            char k;
+            string hh;
+            long int x,y;
+            x = string_to_int(v[i][1]);
+            y = string_to_int(v[i][2]);
+            hh = v[i][3];
+            k = hh[0];
+            chs = cd(x-1,y-1,k,chs);
+        }
+        else if(c11=="H")
+        {
+            long int x,y,l;
+            x = string_to_int(v[i][1]);
+            y = string_to_int(v[i][2]);
+            l = string_to_int(v[i][3]);
+            h(x-1,y-1,l,chs);
+        }
+        else if(c11=="S")
+        {
+            long int x,y,x1,y1;
+            x = string_to_int(v[i][1]);
+            y = string_to_int(v[i][2]);
+            x1 = string_to_int(v[i][3]);
+            y1 = string_to_int(v[i][4]);
+            chs = s(x-1,y-1,x1-1,y1-1,chs);
+        }
+    }
+
+    return 0;
+}
